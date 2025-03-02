@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Result</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head"></head>
 <body>
-<h1 th:text="${message}"></h1>
-<a href="/api/accounts">Back to Accounts</a>
+<nav th:replace="fragments/layout :: nav"></nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">Thành công</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success" th:text="${message}"></div>
+                    <div class="d-grid">
+                        <a href="/list" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/layout :: scripts"></div>
 </body>
 </html>

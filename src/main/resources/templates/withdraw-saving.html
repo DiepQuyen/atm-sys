@@ -9,24 +9,28 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h3 class="card-title mb-0">Rút tiền</h3>
+                    <h3 class="card-title mb-0">Rút tiền tiết kiệm</h3>
                 </div>
                 <div class="card-body">
                     <div class="mb-4">
                         <h5>Tài khoản: <span class="text-primary" th:text="${accountNumber}"></span></h5>
+                        <h5>Số dư tiết kiệm: <span class="text-success" th:text="${#numbers.formatDecimal(savingBalance, 0, 'COMMA', 0, 'POINT')}"></span> VNĐ</h5>
                     </div>
 
-                    <form action="/api/accounts/withdraw" method="post">
+                    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+                    <form action="/api/accounts/withdraw-saving" method="post">
                         <input type="hidden" name="accountNumber" th:value="${accountNumber}">
                         <div class="mb-3">
-                            <label for="amount" class="form-label">Số tiền rút:</label>
+                            <label for="amount" class="form-label">Số tiền cần rút:</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="amount" name="amount" required>
+                                <input type="number" class="form-control" id="amount" name="amount"
+                                       th:max="${savingBalance}" required>
                                 <span class="input-group-text">VNĐ</span>
                             </div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-money-bill-wave me-2"></i>Rút tiền
                             </button>
                             <a href="/list" class="btn btn-secondary">

@@ -2,30 +2,35 @@ package com.fptaptech.atmsys.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //Primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Giá trị Tự động tăng
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING) //Lưu dạng String
+    @Column(nullable = false, length = 50) //Không được null và độ dài tối đa 50
     private TransactionType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false) //Không được null
     private Double amount;
 
-    @CreationTimestamp
-    @Column(updatable = false)
+    @CreationTimestamp //Tự động tạo thời gian
+    @Column(updatable = false) //Không được update
     private LocalDateTime createAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @ManyToOne(fetch = FetchType.LAZY) //Nhiều transaction thuộc về 1 account
+    @JoinColumn(name = "account_id") //Khóa ngoại
     private Account account;
 
     public Long getId() {
@@ -66,5 +71,16 @@ public class Transaction {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Transaction() {
+    }
+
+    public Transaction(Long id, TransactionType type, Double amount, LocalDateTime createAt, Account account) {
+        this.id = id;
+        this.type = type;
+        this.amount = amount;
+        this.createAt = createAt;
+        this.account = account;
     }
 }
